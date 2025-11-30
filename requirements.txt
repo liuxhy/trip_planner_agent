@@ -1,0 +1,24 @@
+# Core dependencies for trip planner
+google-genai
+google-adk
+
+# Environment variable management
+python-dotenv
+
+# Web interface
+streamlit
+
+# Data processing and analysis
+numpy
+pandas
+
+# Excel export
+openpyxl
+
+# HTTP requests for weather API
+requests
+
+# Optional: Jupyter notebook support
+ipykernel
+jupyter
+notebook
