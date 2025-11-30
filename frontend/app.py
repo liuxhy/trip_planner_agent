@@ -60,7 +60,7 @@ with st.sidebar:
         if api_key:
             os.environ["GOOGLE_API_KEY"] = api_key
     else:
-        st.success("✅ API Key loaded from .env")
+        st.success("✅ API Key loaded from environment")
 
     st.divider()
     st.markdown("### 📝 About")
