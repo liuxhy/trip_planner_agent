@@ -64,8 +64,18 @@ GOOGLE_API_KEY=AIzaSyC-YourActualAPIKeyHere
 
 ### 6. Run the app
 
+**Web Interface (Recommended):**
 ```bash
-streamlit run app.py
+python run.py
+```
+Or directly:
+```bash
+streamlit run frontend/app.py
+```
+
+**Command Line:**
+```bash
+python run.py "Travel to Hawaii from Seattle, Jan 10-20, $3000 budget"
 ```
 
 Open your browser at `http://localhost:8501`

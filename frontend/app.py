@@ -133,9 +133,8 @@ if st.button("🚀 Generate Trip Plan", type="primary", use_container_width=True
 
             # Import the workflow module with terminal output
             with redirect_to_terminal():
-                sys.path.append('./backend')
                 # Import after setting API key
-                from backend.workflow import plan_trip
+                from src.workflows.trip_planner import plan_trip
 
             status_text.text("Agents loaded! Planning your trip...")
             progress_bar.progress(30)
