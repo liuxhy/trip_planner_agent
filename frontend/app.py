@@ -199,37 +199,18 @@ if st.button("🚀 Generate Trip Plan", type="primary", use_container_width=True
 
             # Download section
             st.markdown("---")
-            col1, col2 = st.columns(2)
 
-            with col1:
-                st.download_button(
-                    label="📄 Download as Text",
-                    data=response,
-                    file_name=f"trip_plan_{start_date.strftime('%Y%m%d')}.txt",
-                    mime="text/plain",
-                    use_container_width=True
-                )
-
-            with col2:
-                if os.path.exists(excel_path):
-                    with open(excel_path, "rb") as file:
-                        st.download_button(
-                            label="📊 Download as Excel",
-                            data=file,
-                            file_name=f"trip_plan_{start_date.strftime('%Y%m%d')}.xlsx",
-                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                            use_container_width=True
-                        )
-                else:
+            if os.path.exists(excel_path):
+                with open(excel_path, "rb") as file:
                     st.download_button(
                         label="📊 Download as Excel",
-                        data=response,
-                        file_name=f"trip_plan_{start_date.strftime('%Y%m%d')}.txt",
-                        mime="text/plain",
-                        use_container_width=True,
-                        disabled=True,
-                        help="Excel file not available"
+                        data=file,
+                        file_name=f"trip_plan_{start_date.strftime('%Y%m%d')}.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        use_container_width=True
                     )
+            else:
+                st.warning("⚠️ Excel file not available")
 
     except Exception as e:
         progress_placeholder.empty()
