@@ -3,10 +3,16 @@ Configuration settings for the Trip Planner Agent.
 """
 
 import os
-from dotenv import load_dotenv
+import sys
+from pathlib import Path
 from google.genai import types
 
+# Add project root to Python path (for imports)
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
+
 # Load environment variables
+from dotenv import load_dotenv
 load_dotenv()
 
 # API Configuration

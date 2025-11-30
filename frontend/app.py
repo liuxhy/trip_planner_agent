@@ -8,11 +8,16 @@ import asyncio
 import os
 import sys
 from datetime import date
-from dotenv import load_dotenv
+from pathlib import Path
 import contextlib
 from io import StringIO
 
+# Add project root to Python path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
 # Load environment variables
+from dotenv import load_dotenv
 load_dotenv()
 
 # Save the original stdout/stderr (the actual terminal)
