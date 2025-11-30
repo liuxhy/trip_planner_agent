@@ -11,6 +11,7 @@ from datetime import date
 from pathlib import Path
 import contextlib
 from io import StringIO
+import importlib
 
 # Add project root to Python path
 project_root = Path(__file__).parent.parent
@@ -124,6 +125,14 @@ if st.button("🚀 Generate Trip Plan", type="primary", use_container_width=True
     result_placeholder = st.empty()
 
     try:
+        # Clear old Excel file to ensure fresh results
+        excel_path = "./output/travel_plan.xlsx"
+        if os.path.exists(excel_path):
+            try:
+                os.remove(excel_path)
+            except:
+                pass
+
         with progress_placeholder.container():
             st.write("🔄 Initializing agents...")
 
@@ -136,7 +145,9 @@ if st.button("🚀 Generate Trip Plan", type="primary", use_container_width=True
 
             # Import the workflow module with terminal output
             with redirect_to_terminal():
-                # Import after setting API key
+                # Force reload to avoid cached imports
+                import src.workflows.trip_planner
+                importlib.reload(src.workflows.trip_planner)
                 from src.workflows.trip_planner import plan_trip
 
             status_text.text("Agents loaded! Planning your trip...")
@@ -153,6 +164,7 @@ if st.button("🚀 Generate Trip Plan", type="primary", use_container_width=True
             with redirect_to_terminal():
                 _original_stdout.write("\n" + "="*80 + "\n")
                 _original_stdout.write("🚀 Starting trip planning agents...\n")
+                _original_stdout.write(f"📋 Query: {query}\n")
                 _original_stdout.write("="*80 + "\n\n")
                 _original_stdout.flush()
 
