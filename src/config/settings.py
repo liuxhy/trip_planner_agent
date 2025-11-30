@@ -11,20 +11,14 @@ from google.genai import types
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-# Load environment variables
+# Load environment variables from .env file if available (for local development)
 from dotenv import load_dotenv
 load_dotenv()
 
 # API Configuration
+# Note: For web UI, the API key is set by user input in the frontend
+# For CLI, it should be in .env file or environment variables
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-
-if not GOOGLE_API_KEY:
-    raise ValueError(
-        "❌ GOOGLE_API_KEY environment variable is not set.\n"
-        "Please ensure your .env file contains GOOGLE_API_KEY=your_actual_key"
-    )
-
-os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 
 # Model Configuration
 DEFAULT_MODEL = "gemini-2.5-flash-lite"

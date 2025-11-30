@@ -50,6 +50,11 @@ pip install -r requirements.txt
 
 ### 5. Set up your API key
 
+**For Web UI (Streamlit):**
+- No setup needed! Just enter your API key in the sidebar when you run the app
+- Your key is never stored or committed
+
+**For CLI usage:**
 ```bash
 # Copy the example file
 cp .env.example .env

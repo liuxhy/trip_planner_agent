@@ -101,6 +101,16 @@ async def plan_trip(query: str):
     Returns:
         Response from the trip coordinator agent
     """
+    import os
+
+    # Validate API key is set
+    if not os.getenv("GOOGLE_API_KEY"):
+        raise ValueError(
+            "❌ GOOGLE_API_KEY is not set.\n"
+            "For web UI: Enter your API key in the sidebar.\n"
+            "For CLI: Set GOOGLE_API_KEY in your .env file or environment."
+        )
+
     print(f"\n📋 Planning trip with query: {query}\n")
 
     # Create workflow

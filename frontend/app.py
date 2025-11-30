@@ -16,10 +16,6 @@ from io import StringIO
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-# Load environment variables
-from dotenv import load_dotenv
-load_dotenv()
-
 # Save the original stdout/stderr (the actual terminal)
 _original_stdout = sys.__stdout__
 _original_stderr = sys.__stderr__
@@ -50,17 +46,19 @@ st.set_page_config(
 st.title("✈️ AI Trip Planner")
 st.markdown("Plan your perfect trip with AI-powered agents!")
 
-# Sidebar for API key (if not in .env)
+# Sidebar for API key
 with st.sidebar:
     st.header("⚙️ Configuration")
 
-    api_key = os.getenv("GOOGLE_API_KEY")
-    if not api_key:
-        api_key = st.text_input("Google API Key", type="password", help="Enter your Google AI API key")
-        if api_key:
-            os.environ["GOOGLE_API_KEY"] = api_key
-    else:
-        st.success("✅ API Key loaded from environment")
+    api_key = st.text_input(
+        "Google API Key",
+        type="password",
+        help="Enter your Google AI API key. Get one at https://aistudio.google.com/apikey"
+    )
+
+    if api_key:
+        os.environ["GOOGLE_API_KEY"] = api_key
+        st.success("✅ API Key configured")
 
     st.divider()
     st.markdown("### 📝 About")
