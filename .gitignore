@@ -36,3 +36,6 @@ output/
 docker-compose.yml
 Dockerfile
 DOCKER_SETUP.md
+
+# Documentation (local only)
+docs/
