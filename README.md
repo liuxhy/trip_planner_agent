@@ -110,15 +110,35 @@ Your plan includes:
 
 ## 🤖 How It Works
 
-8 specialized AI agents work together:
-1. 🗺️ **Route Agent** - Plans optimal routes
-2. ✈️ **Flight Agent** - Finds best-value flights
-3. 🏨 **Hotel Agent** - Recommends reasonable hotels
-4. 🎯 **Activity Agent** - Discovers attractions
-5. 🌤️ **Weather Agent** - Checks forecasts
-6. 👨‍⚖️ **Critic Agent** - Reviews plans
-7. 🔧 **Refiner Agent** - Improves plans
-8. 📊 **Export Agent** - Creates Excel file
+The system is a `SequentialAgent` pipeline of 8 agents, with sub-agents exposed
+as callable tools and a bounded self-correction loop:
+
+```
+PlanPipeline (SequentialAgent)
+│
+├─ 1. 🗺️  Route Agent          Orders destinations to minimize backtracking
+│
+├─ 2. 📋 Plan Agent            Lead planner — builds the day-by-day itinerary
+│      ├── tool: ✈️  Flight Agent    Best-value flights (via google_search)
+│      ├── tool: 🏨 Hotel Agent      Mid-range hotels per destination
+│      ├── tool: 🎯 Activity Agent   Attractions and hidden gems
+│      └── tool: 🌤️  get_weather_forecast()  Open-Meteo, suggests indoor
+│                                             alternatives on rainy days
+│
+├─ 3. 🔁 PlanRefinementLoop (LoopAgent, max 2 iterations)
+│      ├─ 👨‍⚖️ Critic Agent      Rejects unrealistic drive times, transport
+│      │                        inconsistencies, and over-packed days.
+│      │                        Returns "APPROVED" or 3 specific fixes.
+│      └─ 🔧 Refiner Agent      Applies the fixes, re-querying the flight
+│                               and hotel agents as needed
+│
+└─ 4. 📊 Export Agent          Converts the plan to structured JSON, then
+                               writes a day-by-day Excel file
+```
+
+State flows between stages through shared session keys
+(`optimized_routes` → `Day-by-Day_Plan` → `critique`).
+All Gemini calls use exponential-backoff retries on 429/5xx.
 
 ## ⚠️ Troubleshooting
 
