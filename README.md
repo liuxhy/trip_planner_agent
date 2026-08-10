@@ -134,7 +134,7 @@ Check terminal output for errors. Excel generation requires valid JSON from agen
 
 ## 🛠️ Tech Stack
 
-- Google ADK & Gemini 2.0 Flash Lite
+- Google ADK & Gemini 2.5 Flash Lite
 - Streamlit
 - Pandas & OpenPyxl
 - Python 3.10+
